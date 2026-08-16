@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import './Header.css'
 
 interface HeaderProps {
@@ -80,31 +81,35 @@ export default function Header({ scrolled }: HeaderProps) {
       >
         <span />
         <span />
+        <span />
       </button>
 
-      <div className={`mobileMenu ${menuOpen ? 'mobileMenu--open' : ''}`}>
-        {NAV_LINKS.map((link) => (
+      {createPortal(
+        <div className={`mobileMenu ${menuOpen ? 'mobileMenu--open' : ''}`}>
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => {
+                e.preventDefault()
+                handleNavClick(link.href)
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
           <a
-            key={link.href}
-            href={link.href}
+            href="#contato"
             onClick={(e) => {
               e.preventDefault()
-              handleNavClick(link.href)
+              handleNavClick('#contato')
             }}
           >
-            {link.label}
+            Vamos conversar →
           </a>
-        ))}
-        <a
-          href="#contato"
-          onClick={(e) => {
-            e.preventDefault()
-            handleNavClick('#contato')
-          }}
-        >
-          Vamos conversar →
-        </a>
-      </div>
+        </div>,
+        document.body
+      )}
     </header>
   )
 }
