@@ -1,0 +1,22 @@
+.intro.section {
+  padding-bottom: 64px;
+}
+
+.intro__inner {
+  max-width: 760px;
+}
+
+.intro__title {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+.intro__body {
+  font-size: clamp(16px, 1.8vw, 19px);
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 600px;
+}

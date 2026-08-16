@@ -1,0 +1,10 @@
+.projects__title {
+  font-size: clamp(30px, 4.5vw, 46px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 24px;
+}
+
+.projects__list {
+  margin-top: 32px;
+}

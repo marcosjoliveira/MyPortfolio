@@ -1,0 +1,40 @@
+.stack__title {
+  font-size: clamp(30px, 4.5vw, 46px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 56px;
+}
+
+.stack__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 40px;
+}
+
+.stack__label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.stack__items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stack__items li {
+  font-size: 17px;
+  color: var(--text-muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+  width: fit-content;
+}
+
+.stack__items li:hover {
+  color: var(--primary);
+  transform: translateX(4px);
+}

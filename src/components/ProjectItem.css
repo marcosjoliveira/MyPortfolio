@@ -1,0 +1,234 @@
+.project {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 64px;
+  align-items: center;
+  padding: 96px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.project:last-child {
+  border-bottom: none;
+}
+
+.project--reversed {
+  direction: rtl;
+}
+
+.project--reversed > * {
+  direction: ltr;
+}
+
+@media (max-width: 900px) {
+  .project {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 56px 0;
+  }
+}
+
+/* ── Visual (mockup abstrato) ────────────────────────────── */
+.project__visualWrap {
+  perspective: 1000px;
+}
+
+.project__visual {
+  --px: 0px;
+  --py: 0px;
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  overflow: hidden;
+  aspect-ratio: 16 / 11;
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: center;
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.project:hover .project__visual {
+  /* zoom bem discreto — valores maiores em cima de formas sólidas
+     (sem linhas finas repetidas) evitam o serrilhado/pixelado */
+  transform: translate3d(0, -2px, 0) scale(1.012);
+  border-color: rgba(0, 245, 176, 0.25);
+}
+
+.project__chrome {
+  display: flex;
+  gap: 6px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.project__chrome span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.project__mock {
+  position: absolute;
+  inset: 0;
+  top: 40px;
+  transform: translate3d(var(--px), var(--py), 0);
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+}
+
+/* Todas as variantes usam formas sólidas com cantos arredondados —
+   nada de linhas finas repetidas ou box-shadow empilhado, que
+   "quebravam" (aliasing) ao escalar no hover. Diferenciação só por
+   composição/tamanho, cor sempre no verde da marca. */
+
+/* Redaciona AI — painel de score + linhas de texto */
+.project__visual--redaciona .project__mock {
+  background: linear-gradient(180deg, rgba(0, 245, 176, 0.06), transparent 60%);
+}
+
+.project__visual--redaciona .project__mock::before {
+  content: '';
+  position: absolute;
+  top: 26px;
+  right: 28px;
+  width: 30%;
+  height: 42%;
+  border-radius: 14px;
+  background: rgba(0, 245, 176, 0.10);
+  border: 1px solid rgba(0, 245, 176, 0.28);
+}
+
+.project__visual--redaciona .project__mock::after {
+  content: '';
+  position: absolute;
+  top: 26px;
+  left: 26px;
+  width: 42%;
+  height: 42%;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+/* Tarefo — cartão de lista com um item em destaque */
+.project__visual--tarefo .project__mock {
+  background: linear-gradient(180deg, rgba(0, 245, 176, 0.05), transparent 60%);
+}
+
+.project__visual--tarefo .project__mock::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 26px;
+  right: 26px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(0, 245, 176, 0.10);
+  border: 1px solid rgba(0, 245, 176, 0.25);
+}
+
+.project__visual--tarefo .project__mock::after {
+  content: '';
+  position: absolute;
+  top: 92px;
+  left: 26px;
+  right: 26px;
+  height: 96px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Bot de Promoções — bloco de mensagem enviada */
+.project__visual--bot .project__mock {
+  background: linear-gradient(180deg, rgba(0, 245, 176, 0.05), transparent 60%);
+}
+
+.project__visual--bot .project__mock::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 26px;
+  width: 60%;
+  height: 40px;
+  border-radius: 12px 12px 12px 2px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.project__visual--bot .project__mock::after {
+  content: '';
+  position: absolute;
+  top: 76px;
+  right: 26px;
+  width: 48%;
+  height: 40px;
+  border-radius: 12px 12px 2px 12px;
+  background: rgba(0, 245, 176, 0.12);
+  border: 1px solid rgba(0, 245, 176, 0.28);
+}
+
+/* ── Conteúdo textual ────────────────────────────────────── */
+.project__content {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project:hover .project__content {
+  transform: translateY(-3px);
+}
+
+.project__name {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+.project__description {
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+  max-width: 46ch;
+}
+
+.project__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 32px;
+}
+
+.project__stackLabel {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.project__stackList {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.project__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease, gap 0.2s ease;
+}
+
+.project__link:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  gap: 10px;
+}
+
+.project__link--disabled {
+  color: var(--text-dim);
+  cursor: default;
+}

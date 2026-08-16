@@ -1,0 +1,160 @@
+/* Uma única barra fixa que nasce inteira (logo + nav juntos) quando o
+   usuário sai da Hero — em vez de uma logo flutuante separada da nav,
+   que pareciam dois elementos soltos sem relação entre si. Antes de
+   "scrolled" ela fica totalmente invisível: a Hero já traz a marca. */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 40px;
+  height: 76px;
+
+  background: rgba(5, 5, 5, 0.92);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid transparent;
+
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s ease;
+}
+
+.header--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+  border-bottom-color: var(--border);
+}
+
+.header__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.1s linear;
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.header__logo img {
+  width: 108px;
+  height: auto;
+  display: block;
+}
+
+.nav {
+  display: none;
+}
+
+@media (min-width: 860px) {
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-left: auto;
+  }
+}
+
+.nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+.nav__cta {
+  color: var(--primary) !important;
+  border: 1px solid rgba(0, 245, 176, 0.3);
+  padding: 8px 16px;
+  border-radius: 999px;
+}
+
+.nav__cta:hover {
+  border-color: var(--primary);
+}
+
+/* ── Menu mobile ─────────────────────────────────────────── */
+.menuToggle {
+  display: none;
+}
+
+@media (max-width: 859px) {
+  .menuToggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .menuToggle span {
+    display: block;
+    height: 1.5px;
+    width: 100%;
+    background: var(--text);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .menuToggle--open span:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+
+  .menuToggle--open span:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+}
+
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.mobileMenu--open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.mobileMenu a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 22px;
+}
+
+.mobileMenu a:last-child {
+  color: var(--primary);
+}

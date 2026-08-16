@@ -1,0 +1,81 @@
+/**
+ * Cursor.css
+ * ────────────────────────────────────────────────────────────────────────
+ * Estilo do cursor customizado (ponto + anel + partículas).
+ * Só escondemos o cursor padrão em telas com mouse de verdade
+ * (pointer: fine) — em touch o cursor nativo continua normal.
+ */
+
+@media (pointer: fine) {
+  html,
+  body,
+  a,
+  button {
+    cursor: none;
+  }
+}
+
+/* Ponto central: segue o mouse com precisão total, sem atraso */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  box-shadow: 0 0 8px rgba(0, 245, 176, 0.8);
+}
+
+/* Anel externo: segue com suavização (lerp) e cresce sobre links/botões */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--primary);
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+/* Estado "magnético": quando passa sobre algo clicável (data-cursor="link") */
+.cursor-ring--active {
+  border-color: var(--secondary);
+  background: rgba(0, 194, 255, 0.08);
+}
+
+/* Contêiner das partículas — cada partícula é criada/destruída dinamicamente via JS */
+.cursor-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* Partícula individual: um pontinho tipo "pólen" que nasce, flutua e desaparece */
+.cursor-particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+  will-change: transform, opacity;
+}
+
+/* Em telas touch e para quem prefere menos animação, o cursor customizado não aparece */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring,
+  .cursor-particles {
+    display: none;
+  }
+}

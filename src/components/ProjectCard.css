@@ -1,0 +1,387 @@
+/**
+ * ProjectCard.css
+ * ────────────────────────────────────────────────────────────────────────
+ * O "produto" visual do catálogo: um card grande e detalhado para cada
+ * projeto, dividido em duas colunas (informações + mockup visual estilo
+ * janela de navegador). Efeitos de destaque:
+ *
+ *  - project-card--mint / --cyan → alterna a cor de destaque de cada card
+ *  - tilt 3D + glow que seguem o mouse (variáveis --tilt-x/--tilt-y/
+ *    --glow-x/--glow-y são escritas via JS em ProjectCard.tsx)
+ *  - cards de índice par/ímpar invertem a ordem das colunas no desktop,
+ *    criando um zigue-zague ao longo da "raiz" central (ver Projects.css)
+ */
+
+.project-card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: center;
+
+  padding: 40px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(160deg, var(--card) 0%, #0b0f0e 100%);
+
+  /* Inclinação 3D controlada pelas variáveis escritas via JS no mousemove */
+  transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.project-card:hover {
+  border-color: rgba(0, 245, 176, 0.35);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6);
+}
+
+/* Brilho radial que acompanha o cursor dentro do card (efeito "holofote") */
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  background: radial-gradient(
+    420px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(0, 245, 176, 0.1),
+    transparent 70%
+  );
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-card--cyan::before {
+  background: radial-gradient(
+    420px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(0, 194, 255, 0.1),
+    transparent 70%
+  );
+}
+
+/* Zigue-zague: cards ímpares (2º, 4º...) invertem a ordem das colunas */
+.project-card:nth-child(even) {
+  grid-template-columns: 0.95fr 1.05fr;
+}
+.project-card:nth-child(even) .project-card__info {
+  order: 2;
+}
+.project-card:nth-child(even) .project-card__visual {
+  order: 1;
+}
+
+/* Nó que marca a posição do card sobre a linha do tempo central */
+.project-card__node {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  z-index: 2;
+}
+
+/* ── Coluna de informações ────────────────────────────────────────── */
+.project-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.project-card__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.project-card--cyan .project-card__eyebrow {
+  color: var(--secondary);
+}
+
+.project-card__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+}
+
+.project-card__tagline {
+  font-size: 15px;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+.project-card__description {
+  margin-top: 4px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* Lista de funcionalidades, com marcador "✓" customizado via ::before */
+.project-card__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.project-card__features li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.project-card__features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.project-card--cyan .project-card__features li::before {
+  color: var(--secondary);
+}
+
+/* "Pills" de tecnologia da stack */
+.project-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.stack-pill {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* Rodapé do card: status + botão de acesso */
+.project-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--border);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.status-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+
+/* Projeto no ar: ponto verde "pulsando" — reforça a sensação de algo vivo */
+.status-badge--live .status-badge__dot {
+  background: var(--primary);
+  box-shadow: 0 0 0 rgba(0, 245, 176, 0.5);
+  animation: pulse-dot 2.2s ease-out infinite;
+}
+
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 245, 176, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(0, 245, 176, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 245, 176, 0);
+  }
+}
+
+/* Botão "Ver projeto" */
+.project-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #04140e;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.project-card__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -8px rgba(0, 245, 176, 0.5);
+}
+
+.project-card--cyan .project-card__cta {
+  background: var(--secondary);
+  color: #041520;
+}
+.project-card--cyan .project-card__cta:hover {
+  box-shadow: 0 10px 24px -8px rgba(0, 194, 255, 0.5);
+}
+
+.project-card__cta-arrow {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-card__cta:hover .project-card__cta-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Estado sem link ainda ("Em breve") */
+.project-card__cta--disabled {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-faint);
+  cursor: default;
+}
+
+/* ── Mockup visual (janela de navegador) ──────────────────────────── */
+.browser-frame {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0b0f0e;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7);
+}
+
+.browser-frame__bar {
+  display: flex;
+  gap: 6px;
+  padding: 12px 14px;
+  background: #0e1412;
+  border-bottom: 1px solid var(--border);
+}
+
+.browser-frame__bar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.browser-frame__screen {
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+}
+
+.browser-frame__screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder abstrato (quando o projeto ainda não tem screenshot real) —
+   simula uma interface genérica só com blocos e gradientes, na cor accent
+   do próprio card, pra sempre parecer "de propósito" e nunca quebrado. */
+.browser-frame__placeholder {
+  height: 100%;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(0, 245, 176, 0.08), transparent 60%),
+    #0b0f0e;
+}
+
+.project-card--cyan .browser-frame__placeholder {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(0, 194, 255, 0.08), transparent 60%),
+    #0b0f0e;
+}
+
+.placeholder-bar {
+  height: 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+}
+.placeholder-bar--w60 {
+  width: 60%;
+}
+.placeholder-bar--w40 {
+  width: 40%;
+  background: rgba(0, 245, 176, 0.18);
+}
+.project-card--cyan .placeholder-bar--w40 {
+  background: rgba(0, 194, 255, 0.18);
+}
+
+.placeholder-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.placeholder-block {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+
+/* ── Responsivo ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .project-card,
+  .project-card:nth-child(even) {
+    grid-template-columns: 1fr;
+    padding: 28px 22px;
+    margin-left: 56px; /* abre espaço pra linha do tempo, que migrou pra esquerda */
+  }
+
+  .project-card:nth-child(even) .project-card__info,
+  .project-card:nth-child(even) .project-card__visual {
+    order: initial;
+  }
+
+  .project-card__node {
+    left: -56px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .project-card__title {
+    font-size: 23px;
+  }
+}
