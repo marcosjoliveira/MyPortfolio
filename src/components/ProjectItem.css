@@ -78,6 +78,19 @@
   will-change: transform;
 }
 
+.project__mockImage {
+  position: absolute;
+  inset: 0;
+  top: 40px;
+  width: 100%;
+  height: calc(100% - 40px);
+  object-fit: cover;
+  object-position: top center;
+  transform: translate3d(var(--px), var(--py), 0) scale(1.03);
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+}
+
 /* Todas as variantes usam formas sólidas com cantos arredondados —
    nada de linhas finas repetidas ou box-shadow empilhado, que
    "quebravam" (aliasing) ao escalar no hover. Diferenciação só por

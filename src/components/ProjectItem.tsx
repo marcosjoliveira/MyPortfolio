@@ -7,6 +7,9 @@ export interface Project {
   description: string
   stack: string[]
   variant: 'redaciona' | 'tarefo' | 'bot'
+  /** Caminho pro print do projeto, ex: "/projects/redaciona.png".
+   *  Se não informado, cai no mockup abstrato de cada variante. */
+  image?: string
   url?: string
   linkLabel?: string
   reversed?: boolean
@@ -52,7 +55,16 @@ export default function ProjectItem({ project, reducedMotion }: ProjectItemProps
             <span />
             <span />
           </div>
-          <div className="project__mock" />
+          {project.image ? (
+            <img
+              className="project__mockImage"
+              src={project.image}
+              alt={`Captura de tela do projeto ${project.name}`}
+              loading="lazy"
+            />
+          ) : (
+            <div className="project__mock" />
+          )}
         </div>
       </Reveal>
 

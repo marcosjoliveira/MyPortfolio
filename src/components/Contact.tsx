@@ -4,10 +4,10 @@ import './Contact.css'
 
 // TODO(Marcos): substitua os placeholders abaixo pelos seus links reais.
 const SOCIAL_LINKS = [
-  { label: 'GitHub', href: '#' },
-  { label: 'LinkedIn', href: '#' },
-  { label: 'Instagram', href: '#' },
-  { label: 'E-mail', href: 'mailto:contato@seudominio.com' },
+  { label: 'GitHub', href: 'https://github.com/marcosjoliveira' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/marcosjoliveira11' },
+  { label: 'Instagram', href: 'https://instagram.com/jardim.dev' },
+  { label: 'E-mail', href: 'mailto:marcosjardim.oliveira@gmail.com' },
 ]
 
 export default function Contact({ reducedMotion }: { reducedMotion: boolean }) {
@@ -23,7 +23,7 @@ export default function Contact({ reducedMotion }: { reducedMotion: boolean }) {
         </Reveal>
 
         <Reveal delay={100}>
-          <a ref={ctaRef} className="contact__cta" href="mailto:contato@seudominio.com">
+          <a ref={ctaRef} className="contact__cta" href="https://w.app/rhizch" target="_blank" rel="noreferrer">
             Entrar em contato <span>→</span>
           </a>
         </Reveal>

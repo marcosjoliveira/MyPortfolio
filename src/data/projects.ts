@@ -60,7 +60,7 @@ export const projects: Project[] = [
       'SEO otimizado para captar tráfego orgânico na época de provas',
     ],
     // TODO: confirme se este é o link definitivo antes de publicar
-    link: 'https://redaciona-ai.vercel.app',
+    link: 'https://redacionaai.com.br',
     status: 'Em produção',
     accent: 'mint',
   },
