@@ -36,7 +36,7 @@ export default function Contact({ reducedMotion }: { reducedMotion: boolean }) {
             <a
               ref={ctaRef}
               className="btn btn--primary contact__cta"
-              href="https://w.app/rhizch"
+              href="https://wa.me/5521996189304"
               target="_blank"
               rel="noreferrer"
             >
