@@ -12,6 +12,8 @@
 }
 
 .hero__inner {
+  transform-style: preserve-3d;
+  will-change: transform;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,9 +42,7 @@
   }
 }
 
-/* Wrapper que recebe SÓ o transform do parallax (rotateX/rotateY) */
 .hero__logoWrap {
-  will-change: transform;
   margin-bottom: 36px;
 }
 
@@ -91,74 +91,45 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 14px;
-  margin-bottom: 56px;
 }
 
-.hero__facts {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px 36px;
-  font-size: 14px;
-  color: var(--text-dim);
-}
-
-.hero__facts strong {
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
-.hero__facts li + li {
-  position: relative;
-}
-
-.hero__facts li + li::before {
-  content: '';
-  position: absolute;
-  left: -19px;
-  top: 50%;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--border-strong);
-}
-
-/* Indicador de rolagem: trilho fino com um ponto descendo */
+/* Dica de rolagem: texto + seta quicando (como na versão original) */
 .hero__scroll {
   position: absolute;
   bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 24px;
-  height: 40px;
-  border-radius: 999px;
-  border: 1px solid var(--border-strong);
+  left: 0;
+  right: 0;
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   background: none;
+  border: none;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  animation: heroIn 0.9s var(--ease-out) 0.6s both;
+  transition: color 0.2s ease;
 }
 
 .hero__scroll:hover {
-  border-color: var(--primary-line);
+  color: var(--text);
 }
 
-.hero__scroll span {
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  width: 3px;
-  height: 7px;
-  margin-left: -1.5px;
-  border-radius: 2px;
-  background: var(--primary);
-  animation: scrollDot 1.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+.hero__scrollArrow {
+  font-size: 16px;
+  color: var(--primary);
+  animation: bounce 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-@keyframes scrollDot {
-  0% { transform: translateY(0); opacity: 1; }
-  70% { transform: translateY(14px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 0; }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }
 
 @media (max-width: 640px) {
@@ -179,15 +150,6 @@
     width: 100%;
     flex-direction: column;
   }
-
-  .hero__facts {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .hero__facts li + li::before {
-    display: none;
-  }
 }
 
 @media (max-height: 640px) {
@@ -198,7 +160,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero__inner > *,
-  .hero__scroll span {
+  .hero__scroll,
+  .hero__scrollArrow {
     animation: none;
   }
 }

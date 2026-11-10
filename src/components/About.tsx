@@ -1,19 +1,34 @@
+import type { ReactNode } from 'react'
 import Reveal from './Reveal'
 import SectionHead from './SectionHead'
 import './About.css'
 
-const HIGHLIGHTS = [
+const HIGHLIGHTS: { title: string; text: ReactNode }[] = [
   {
-    title: 'Engenharia da Computação',
-    text: 'Estudante, construindo produtos em paralelo às aulas.',
+    title: 'Formação',
+    text: (
+      <>
+        <strong>Engenharia da Computação</strong> na UFCIRJ (antigo CEFET/RJ), campus Petrópolis.
+      </>
+    ),
   },
   {
-    title: 'Aprender construindo',
-    text: 'Cada projeto novo é uma desculpa pra estudar algo diferente.',
+    title: 'Experiência',
+    text: (
+      <>
+        <strong>Instrutor de IA e Empreendedorismo</strong> em curso da Recode, com o Instituto
+        Zeca Pagodinho e a SBM Offshore.
+      </>
+    ),
   },
   {
-    title: 'Produção primeiro',
-    text: 'Levo a ideia até o ar rápido, e só depois refino com uso real.',
+    title: 'Interesses',
+    text: (
+      <>
+        <strong>Inteligência artificial</strong>, novas tecnologias e criar produtos que resolvem
+        problemas reais.
+      </>
+    ),
   },
 ]
 
@@ -21,19 +36,19 @@ export default function About() {
   return (
     <section id="sobre" className="about section">
       <div className="section__inner about__inner">
-        <SectionHead label="Sobre" title="Por trás do código." />
+        <SectionHead label="Quem sou" title="Sobre mim" />
 
         <div className="about__body">
           <Reveal as="p" className="about__lead">
-            Comecei mexendo em código por curiosidade e virou o jeito que eu resolvo praticamente
-            tudo hoje. Gosto de transformar ideia em produto real — do primeiro commit até alguém
-            de verdade usando.
+            Tenho <em>20 anos</em>, sou de <em>Duque de Caxias</em> e estudo Engenharia da
+            Computação em <em>Petrópolis</em>.
           </Reveal>
 
           <Reveal as="p" className="about__text" delay={80}>
-            Trabalho em todas as camadas de um produto: interface, backend e a lógica que faz ele
-            funcionar de verdade em produção. Hoje mantenho três projetos rodando ao mesmo tempo,
-            do zero ao usuário final.
+            Sou <strong>ambicioso</strong> com o que construo e dou valor a{' '}
+            <strong>bons relacionamentos</strong>, tanto com quem
+            trabalha comigo quanto com quem usa o que eu faço. Também gosto de ensinar e de
+            trocar conhecimento com outras pessoas.
           </Reveal>
 
           <ul className="about__highlights">

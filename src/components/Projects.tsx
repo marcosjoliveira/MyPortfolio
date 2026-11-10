@@ -2,23 +2,29 @@ import SectionHead from './SectionHead'
 import ProjectItem, { type Project } from './ProjectItem'
 import './Projects.css'
 
-/* Para trocar um print: substitua o arquivo em public/projects/ mantendo
-   o mesmo nome (proporção 16:10, ex.: 1600×1000). */
+/* Para trocar um print: substitua o arquivo em public/projects/ mantendo o
+   mesmo nome. É o print da página inteira (1400 px de largura, altura livre):
+   a prévia rola por ele quando o mouse passa por cima. */
 const PROJECTS: Project[] = [
   {
     name: 'Redaciona AI',
     category: 'SaaS educacional',
     status: 'Em produção',
-    description:
-      'Plataforma que corrige redações com IA na grade oficial de cada banca. O estudante cola o texto e recebe a nota por competência, os trechos que mais custam pontos e como corrigir cada um.',
+    description: (
+      <>
+        Corrige redações com <strong>IA</strong> seguindo os critérios de cada vestibular. O
+        estudante envia o texto e recebe a <strong>nota por competência</strong> e o que melhorar.
+      </>
+    ),
     highlights: [
-      'Correção por competência para ENEM, FUVEST, UNICAMP, UERJ e Cebraspe',
-      'Créditos avulsos e assinatura recorrente com Stripe',
-      'Login com Google e SEO voltado para a temporada de provas',
+      <>
+        <strong>ENEM, FUVEST, UNICAMP, UERJ e Cebraspe</strong>
+      </>,
+      'Pagamento por créditos ou assinatura',
     ],
     stack: ['React', 'Node.js', 'Claude API', 'Supabase', 'Stripe'],
     variant: 'redaciona',
-    image: '/projects/redaciona.webp',
+    image: '/projects/redaciona-full.webp',
     url: 'https://redacionaai.com.br',
     linkLabel: 'redacionaai.com.br',
   },
@@ -26,16 +32,21 @@ const PROJECTS: Project[] = [
     name: 'Tarefo',
     category: 'Produtividade · PWA',
     status: 'Em produção',
-    description:
-      'Gerenciador de tarefas minimalista e 100% local. Roda como PWA offline-first, sem backend e sem cadastro — os dados nunca saem do dispositivo.',
+    description: (
+      <>
+        Lista de tarefas simples, <strong>sem cadastro</strong>. Funciona{' '}
+        <strong>sem internet</strong> e os dados ficam só no seu aparelho.
+      </>
+    ),
     highlights: [
-      'Prioridades, vencimentos e dashboard de progresso',
-      'Dados em IndexedDB: funciona sem internet',
-      'Mesma base de código na web e no Android, via Capacitor',
+      'Prioridades, prazos e acompanhamento do progresso',
+      <>
+        Disponível na <strong>web</strong> e no <strong>Android</strong>
+      </>,
     ],
     stack: ['React', 'IndexedDB', 'PWA', 'Capacitor'],
     variant: 'tarefo',
-    image: '/projects/tarefo.webp',
+    image: '/projects/tarefo-full.webp',
     url: 'https://usetarefo.com.br',
     linkLabel: 'usetarefo.com.br',
     reversed: true,
@@ -44,12 +55,18 @@ const PROJECTS: Project[] = [
     name: 'Bot de Promoções',
     category: 'Automação · Telegram e WhatsApp',
     status: 'Em produção',
-    description:
-      'Automação que rastreia ofertas na Amazon, Mercado Livre e Shopee e publica cada uma, já formatada, em canais do Telegram e do WhatsApp.',
+    description: (
+      <>
+        Busca ofertas na <strong>Amazon</strong>, no <strong>Mercado Livre</strong> e na{' '}
+        <strong>Shopee</strong> e publica automaticamente nos meus canais do Telegram e do
+        WhatsApp.
+      </>
+    ),
     highlights: [
-      'Scraping resiliente com sessão autenticada',
-      'Mensagem pronta com preço, desconto e link de compra',
-      'Rodando 24/7 com deploy contínuo na Railway',
+      'Cada post sai com preço, desconto e link de compra',
+      <>
+        Funciona <strong>24 horas por dia</strong>, sem intervenção
+      </>,
     ],
     stack: ['Node.js', 'Puppeteer', 'Telegram API', 'Railway'],
     variant: 'bot',
@@ -65,8 +82,7 @@ export default function Projects({ reducedMotion }: { reducedMotion: boolean }) 
       <div className="section__inner">
         <SectionHead
           label="Projetos"
-          title="Trabalho selecionado"
-          lead="Três produtos que idealizei, construí e mantenho no ar — cada um resolvendo um problema diferente, com usuários reais."
+          title="O que eu construí"
         />
 
         <div className="projects__list">

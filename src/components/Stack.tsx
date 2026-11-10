@@ -17,8 +17,7 @@ export default function Stack() {
       <div className="section__inner">
         <SectionHead
           label="Stack"
-          title="Ferramentas do dia a dia"
-          lead="O que uso para levar um produto do primeiro commit até a produção."
+          title="Tecnologias que uso"
         />
 
         <div className="stack__grid">

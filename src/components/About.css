@@ -26,7 +26,7 @@
   line-height: 1.7;
   color: var(--text-muted);
   margin-bottom: 44px;
-  max-width: 60ch;
+  max-width: 50ch;
 }
 
 .about__highlights {
@@ -44,13 +44,13 @@
   gap: 8px;
 }
 
-.about__highlights strong {
+.about__highlights li > strong {
   font-size: 15px;
   font-weight: 600;
   color: var(--text);
 }
 
-.about__highlights span {
+.about__highlights li > span {
   font-size: 14px;
   line-height: 1.55;
   color: var(--text-muted);

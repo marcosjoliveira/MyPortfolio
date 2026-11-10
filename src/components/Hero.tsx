@@ -24,15 +24,20 @@ export default function Hero({ reducedMotion }: HeroProps) {
       target.current.y = (e.clientY / window.innerHeight - 0.5) * 2
     }
 
-    function loop() {
-      const LERP = 0.06
-      smooth.current.x += (target.current.x - smooth.current.x) * LERP
-      smooth.current.y += (target.current.y - smooth.current.y) * LERP
+    let last = performance.now()
+
+    function loop(now: number) {
+      // Suavização independente da taxa de quadros (60 Hz, 120 Hz...)
+      const dt = Math.min(64, now - last)
+      last = now
+      const k = 1 - Math.pow(1 - 0.05, dt / 16.67)
+      smooth.current.x += (target.current.x - smooth.current.x) * k
+      smooth.current.y += (target.current.y - smooth.current.y) * k
 
       if (parallaxRef.current) {
-        const rotY = smooth.current.x * 5
-        const rotX = -smooth.current.y * 4
-        parallaxRef.current.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg)`
+        const rotY = smooth.current.x * 8
+        const rotX = -smooth.current.y * 6
+        parallaxRef.current.style.transform = `perspective(700px) rotateX(${rotX.toFixed(3)}deg) rotateY(${rotY.toFixed(3)}deg)`
       }
       raf.current = requestAnimationFrame(loop)
     }
@@ -48,21 +53,18 @@ export default function Hero({ reducedMotion }: HeroProps) {
 
   return (
     <section className="hero" id="top">
-      <div className="hero__inner">
-        <div className="hero__logoWrap" ref={parallaxRef}>
+      <div className="hero__inner" ref={parallaxRef}>
+        <div className="hero__logoWrap">
           <img src="/jardim-dev-logo-transparent.png" alt="Jardim Dev" className="hero__logo" />
         </div>
 
-        <p className="hero__eyebrow">Marcos Jardim · Desenvolvedor full stack</p>
+        <p className="hero__eyebrow">Desenvolvedor · Engenharia da Computação</p>
 
         <h1 className="hero__title">
-          Produtos digitais, <span>do zero à produção.</span>
+          Marcos <span>Jardim</span>
         </h1>
 
-        <p className="hero__tagline">
-          Construo aplicações web completas — interface, backend, pagamentos e IA — e mantenho
-          cada uma rodando para usuários reais.
-        </p>
+        <p className="hero__tagline">Crio produtos digitais com código e inteligência artificial.</p>
 
         <div className="hero__actions">
           <button className="btn btn--primary" onClick={() => scrollTo('#projetos')}>
@@ -72,22 +74,11 @@ export default function Hero({ reducedMotion }: HeroProps) {
             Entrar em contato
           </button>
         </div>
-
-        <ul className="hero__facts">
-          <li>
-            <strong>3</strong> produtos em produção
-          </li>
-          <li>
-            <strong>Web · PWA · Android</strong>
-          </li>
-          <li>
-            <strong>React · Node.js · IA</strong>
-          </li>
-        </ul>
       </div>
 
-      <button className="hero__scroll" onClick={() => scrollTo('#projetos')} aria-label="Rolar até os projetos">
-        <span />
+      <button className="hero__scroll" onClick={() => scrollTo('#intro')}>
+        Role para conhecer
+        <span className="hero__scrollArrow" aria-hidden="true">↓</span>
       </button>
     </section>
   )

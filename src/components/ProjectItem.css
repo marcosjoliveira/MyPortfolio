@@ -57,8 +57,6 @@
 }
 
 .project__visual {
-  --px: 0px;
-  --py: 0px;
   position: relative;
   border-radius: var(--radius);
   border: 1px solid var(--border-strong);
@@ -67,89 +65,27 @@
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.04) inset,
     0 30px 60px -30px rgba(0, 0, 0, 0.9);
+  will-change: transform;
   transition:
-    transform 0.6s var(--ease-out),
+    transform 0.7s var(--ease-out),
     border-color 0.3s ease;
 }
 
 .project:hover .project__visual {
-  transform: translateY(-4px);
+  transform: translate3d(0, -4px, 0);
   border-color: var(--primary-line);
 }
 
-.project__chrome {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  height: 40px;
-  padding: 0 14px;
-  background: #121414;
-  border-bottom: 1px solid var(--border);
+/* "translate" separado do "transform" do reveal, pra um não anular o outro */
+.project__content {
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 1s var(--ease-out),
+    translate 0.6s var(--ease-out);
 }
 
-.project__dots {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.project__dots span {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #2a2d2d;
-}
-
-.project__address {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  min-width: 0;
-  flex: 1;
-  max-width: 320px;
-  margin: 0 auto;
-  height: 24px;
-  padding: 0 12px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-dim);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.project__address svg {
-  width: 11px;
-  height: 11px;
-  flex-shrink: 0;
-  opacity: 0.8;
-}
-
-/* espaço à direita equivalente aos 3 pontos, pra barra ficar centralizada */
-.project__chrome::after {
-  content: '';
-  width: 39px;
-  flex-shrink: 0;
-}
-
-.project__screen {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  container-type: inline-size;
-  background: #0b0c0c;
-}
-
-.project__shot {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  transform: translate3d(var(--px), var(--py), 0) scale(1.025);
-  transition: transform 0.25s ease-out;
+.project:hover .project__content {
+  translate: 0 -3px;
 }
 
 /* ── Conteúdo textual ────────────────────────────────────── */
@@ -217,6 +153,7 @@
   font-size: 16px;
   line-height: 1.65;
   margin-bottom: 24px;
+  max-width: 46ch;
 }
 
 .project__highlights {

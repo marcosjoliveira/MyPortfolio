@@ -22,13 +22,14 @@ export default function Contact({ reducedMotion }: { reducedMotion: boolean }) {
           </Reveal>
 
           <Reveal as="h2" className="contact__title" delay={60}>
-            Tem uma ideia?
+            Vamos
             <br />
-            <span>Vamos construir.</span>
+            <span>conversar?</span>
           </Reveal>
 
           <Reveal as="p" className="contact__lead" delay={120}>
-            Me conta o que você quer tirar do papel. Respondo pelo WhatsApp ou por e-mail.
+            Seja um <strong>projeto</strong>, uma <strong>vaga</strong> ou só uma troca de ideias,
+            me chama no WhatsApp ou por e-mail.
           </Reveal>
 
           <Reveal as="div" className="contact__actions" delay={180}>

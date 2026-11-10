@@ -1,17 +1,17 @@
-import { useRef } from 'react'
+import type { ReactNode } from 'react'
 import Reveal from './Reveal'
-import BotPreview from './BotPreview'
+import ProjectPreview from './ProjectPreview'
 import './ProjectItem.css'
 
 export interface Project {
   name: string
   category: string
   status: string
-  description: string
-  highlights: string[]
+  description: ReactNode
+  highlights: ReactNode[]
   stack: string[]
   variant: 'redaciona' | 'tarefo' | 'bot'
-  /** Caminho pro print do projeto, ex: "/projects/redaciona.webp".
+  /** Print da página inteira, ex: "/projects/redaciona-full.webp".
    *  Sem imagem, a variante "bot" desenha a prévia do canal em código. */
   image?: string
   url?: string
@@ -31,68 +31,14 @@ interface ProjectItemProps {
 const pad = (n: number) => String(n).padStart(2, '0')
 
 export default function ProjectItem({ project, index, total, reducedMotion }: ProjectItemProps) {
-  const visualRef = useRef<HTMLDivElement>(null)
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    if (reducedMotion) return
-    const el = visualRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    const relX = (e.clientX - rect.left) / rect.width - 0.5
-    const relY = (e.clientY - rect.top) / rect.height - 0.5
-    el.style.setProperty('--px', `${relX * -6}px`)
-    el.style.setProperty('--py', `${relY * -6}px`)
-  }
-
-  function handleMouseLeave() {
-    const el = visualRef.current
-    if (!el) return
-    el.style.setProperty('--px', '0px')
-    el.style.setProperty('--py', '0px')
-  }
-
   const frame = (
-    <div
-      className={`project__visual project__visual--${project.variant}`}
-      ref={visualRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div className="project__chrome">
-        <div className="project__dots" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-        <div className="project__address">
-          <svg viewBox="0 0 16 16" aria-hidden="true">
-            <path
-              d="M5 7V5a3 3 0 0 1 6 0v2m-7 0h8v6H4z"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinejoin="round"
-            />
-          </svg>
-          {project.displayUrl ?? project.linkLabel}
-        </div>
-      </div>
-
-      <div className="project__screen">
-        {project.image ? (
-          <img
-            className="project__shot"
-            src={project.image}
-            alt={`Tela do projeto ${project.name}`}
-            width={1600}
-            height={1000}
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <BotPreview />
-        )}
-      </div>
+    <div className={`project__visual project__visual--${project.variant}`}>
+      <ProjectPreview
+        name={project.name}
+        address={project.displayUrl ?? project.linkLabel ?? ''}
+        image={project.image}
+        reducedMotion={reducedMotion}
+      />
     </div>
   )
 
@@ -127,8 +73,8 @@ export default function ProjectItem({ project, index, total, reducedMotion }: Pr
         <p className="project__description">{project.description}</p>
 
         <ul className="project__highlights">
-          {project.highlights.map((h) => (
-            <li key={h}>{h}</li>
+          {project.highlights.map((h, i) => (
+            <li key={i}>{h}</li>
           ))}
         </ul>
 
