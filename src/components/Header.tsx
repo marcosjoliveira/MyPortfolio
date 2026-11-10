@@ -76,7 +76,8 @@ export default function Header({ scrolled }: HeaderProps) {
 
       <button
         className={`menuToggle ${menuOpen ? 'menuToggle--open' : ''}`}
-        aria-label="Abrir menu"
+        aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+        aria-expanded={menuOpen}
         onClick={() => setMenuOpen((v) => !v)}
       >
         <span />

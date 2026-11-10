@@ -2,12 +2,12 @@ import Reveal from './Reveal'
 import { useMagnetic } from '../hooks/useMagnetic'
 import './Contact.css'
 
-// TODO(Marcos): substitua os placeholders abaixo pelos seus links reais.
+const EMAIL = 'marcosjardim.oliveira@gmail.com'
+
 const SOCIAL_LINKS = [
-  { label: 'GitHub', href: 'https://github.com/marcosjoliveira' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/marcosjoliveira11' },
-  { label: 'Instagram', href: 'https://instagram.com/jardim.dev' },
-  { label: 'E-mail', href: 'mailto:marcosjardim.oliveira@gmail.com' },
+  { label: 'GitHub', handle: 'marcosjoliveira', href: 'https://github.com/marcosjoliveira' },
+  { label: 'LinkedIn', handle: 'marcosjoliveira11', href: 'https://linkedin.com/in/marcosjoliveira11' },
+  { label: 'Instagram', handle: '@jardim.dev', href: 'https://instagram.com/jardim.dev' },
 ]
 
 export default function Contact({ reducedMotion }: { reducedMotion: boolean }) {
@@ -15,26 +15,51 @@ export default function Contact({ reducedMotion }: { reducedMotion: boolean }) {
 
   return (
     <section id="contato" className="contact section">
-      <div className="section__inner contact__inner">
-        <Reveal as="h2" className="contact__title">
-          Tem uma ideia?
-          <br />
-          Vamos construir.
-        </Reveal>
+      <div className="section__inner">
+        <div className="contact__card">
+          <Reveal as="span" className="sectionHead__label">
+            Contato
+          </Reveal>
 
-        <Reveal delay={100}>
-          <a ref={ctaRef} className="contact__cta" href="https://w.app/rhizch" target="_blank" rel="noreferrer">
-            Entrar em contato <span>→</span>
-          </a>
-        </Reveal>
+          <Reveal as="h2" className="contact__title" delay={60}>
+            Tem uma ideia?
+            <br />
+            <span>Vamos construir.</span>
+          </Reveal>
 
-        <Reveal as="div" className="contact__links" delay={180}>
-          {SOCIAL_LINKS.map((link) => (
-            <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
-              {link.label}
+          <Reveal as="p" className="contact__lead" delay={120}>
+            Me conta o que você quer tirar do papel. Respondo pelo WhatsApp ou por e-mail.
+          </Reveal>
+
+          <Reveal as="div" className="contact__actions" delay={180}>
+            <a
+              ref={ctaRef}
+              className="btn btn--primary contact__cta"
+              href="https://w.app/rhizch"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Chamar no WhatsApp <span className="btn__arrow">→</span>
             </a>
-          ))}
-        </Reveal>
+            <a className="btn btn--ghost" href={`mailto:${EMAIL}`}>
+              {EMAIL}
+            </a>
+          </Reveal>
+
+          <Reveal as="ul" className="contact__links" delay={240}>
+            {SOCIAL_LINKS.map((link) => (
+              <li key={link.label}>
+                <a href={link.href} target="_blank" rel="noreferrer">
+                  <span className="contact__linkLabel">{link.label}</span>
+                  <span className="contact__linkHandle">{link.handle}</span>
+                  <span className="contact__linkArrow" aria-hidden="true">
+                    ↗
+                  </span>
+                </a>
+              </li>
+            ))}
+          </Reveal>
+        </div>
       </div>
     </section>
   )

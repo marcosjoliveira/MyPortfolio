@@ -3,7 +3,6 @@ import './App.css'
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
 import Header from './components/Header'
 import Hero from './components/Hero'
-import Intro from './components/Intro'
 import Projects from './components/Projects'
 import Process from './components/Process'
 import Stack from './components/Stack'
@@ -37,7 +36,6 @@ function App() {
 
       <main>
         <Hero reducedMotion={reducedMotion} />
-        <Intro />
         <Projects reducedMotion={reducedMotion} />
         <Process />
         <Stack />

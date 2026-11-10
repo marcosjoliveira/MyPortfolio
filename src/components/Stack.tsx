@@ -1,4 +1,5 @@
 import Reveal from './Reveal'
+import SectionHead from './SectionHead'
 import './Stack.css'
 
 const CATEGORIES: { label: string; items: string[] }[] = [
@@ -14,9 +15,11 @@ export default function Stack() {
   return (
     <section className="stack section">
       <div className="section__inner">
-        <Reveal as="h2" className="stack__title">
-          Stack
-        </Reveal>
+        <SectionHead
+          label="Stack"
+          title="Ferramentas do dia a dia"
+          lead="O que uso para levar um produto do primeiro commit até a produção."
+        />
 
         <div className="stack__grid">
           {CATEGORIES.map((cat, i) => (

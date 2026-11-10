@@ -1,0 +1,234 @@
+/* Tudo aqui é dimensionado em cqw (largura da própria janela de prévia),
+   então a composição encolhe por igual do desktop ao celular. */
+.botPreview {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 5cqw;
+  padding: 0 6cqw;
+  font-size: 2.1cqw;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(0, 245, 176, 0.07), transparent 55%),
+    radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 3.4cqw 3.4cqw,
+    #0b0c0c;
+}
+
+/* ── Fluxo: lojas → bot → canais ─────────────────────────── */
+.botPreview__flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.botPreview__caption {
+  font-family: var(--font-mono);
+  font-size: 1.55cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1.6cqw;
+}
+
+.botPreview__nodes {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2cqw;
+}
+
+.botPreview__nodes li {
+  padding: 1.1cqw 1.8cqw;
+  border-radius: 1.4cqw;
+  border: 1px solid var(--border-strong);
+  background: #121414;
+  color: var(--text-muted);
+  font-size: 1.9cqw;
+  white-space: nowrap;
+}
+
+.botPreview__nodes--out li {
+  border-color: var(--primary-line);
+  background: var(--primary-soft);
+  color: var(--text);
+}
+
+.botPreview__wire {
+  width: 1px;
+  height: 4.6cqw;
+  margin: 1.4cqw 0;
+  background: linear-gradient(to bottom, var(--border-strong), var(--primary));
+}
+
+.botPreview__core {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.4cqw;
+  padding: 1.5cqw 2.4cqw;
+  border-radius: 99cqw;
+  border: 1px solid var(--primary-line);
+  background: #0e1412;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 1.7cqw;
+  white-space: nowrap;
+}
+
+.botPreview__core + .botPreview__wire {
+  margin-bottom: 2cqw;
+}
+
+.botPreview__pulse {
+  width: 1.3cqw;
+  height: 1.3cqw;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: botPulse 2s ease-out infinite;
+}
+
+@keyframes botPulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 245, 176, 0.5); }
+  100% { box-shadow: 0 0 0 1.6cqw rgba(0, 245, 176, 0); }
+}
+
+/* ── Mensagem publicada no canal ─────────────────────────── */
+.botPreview__chat {
+  justify-self: center;
+  width: 100%;
+  max-width: 37cqw;
+  border-radius: 2.4cqw;
+  border: 1px solid var(--border-strong);
+  background: #101212;
+  overflow: hidden;
+  box-shadow: 0 3cqw 6cqw -2cqw rgba(0, 0, 0, 0.8);
+}
+
+.botPreview__chatHead {
+  display: flex;
+  align-items: center;
+  gap: 1.6cqw;
+  padding: 1.6cqw 2cqw;
+  background: #161919;
+  border-bottom: 1px solid var(--border);
+}
+
+.botPreview__chatHead img {
+  width: 4.6cqw;
+  height: 4.6cqw;
+  border-radius: 50%;
+  display: block;
+}
+
+.botPreview__chatHead div {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+  min-width: 0;
+}
+
+.botPreview__chatHead strong {
+  font-size: 1.9cqw;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.botPreview__chatHead span {
+  font-size: 1.5cqw;
+  color: var(--text-dim);
+}
+
+.botPreview__bubble {
+  position: relative;
+  margin: 2cqw;
+  padding: 1.6cqw 1.8cqw 2cqw;
+  border-radius: 1.8cqw 1.8cqw 1.8cqw 0.5cqw;
+  background: #1b1f1e;
+}
+
+.botPreview__product {
+  display: flex;
+  justify-content: center;
+  height: 15.5cqw;
+  margin-bottom: 1.6cqw;
+  border-radius: 1.1cqw;
+  background: #fff;
+  overflow: hidden;
+}
+
+.botPreview__product img {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+.botPreview__headline {
+  font-size: 1.55cqw;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.6cqw;
+}
+
+.botPreview__item {
+  font-size: 1.85cqw;
+  line-height: 1.35;
+  color: var(--text);
+  margin-bottom: 1.3cqw;
+}
+
+.botPreview__price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.4cqw 1.2cqw;
+  margin-bottom: 1.6cqw;
+}
+
+.botPreview__price s {
+  font-size: 1.6cqw;
+  color: var(--text-dim);
+}
+
+.botPreview__price strong {
+  font-size: 2.5cqw;
+  font-weight: 700;
+}
+
+.botPreview__price em {
+  font-style: normal;
+  font-size: 1.45cqw;
+  font-weight: 600;
+  color: #04130e;
+  background: var(--primary);
+  padding: 0.3cqw 0.9cqw;
+  border-radius: 0.6cqw;
+}
+
+.botPreview__buy {
+  display: block;
+  text-align: center;
+  font-size: 1.7cqw;
+  font-weight: 500;
+  color: var(--primary);
+  padding: 1.1cqw;
+  border-radius: 1.1cqw;
+  background: var(--primary-soft);
+}
+
+.botPreview__time {
+  position: absolute;
+  right: 1.8cqw;
+  bottom: 0.35cqw;
+  font-size: 1.2cqw;
+  color: var(--text-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .botPreview__pulse {
+    animation: none;
+  }
+}

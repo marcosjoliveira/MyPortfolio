@@ -5,6 +5,10 @@ interface HeroProps {
   reducedMotion: boolean
 }
 
+function scrollTo(selector: string) {
+  document.querySelector(selector)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 export default function Hero({ reducedMotion }: HeroProps) {
   const parallaxRef = useRef<HTMLDivElement>(null)
   const target = useRef({ x: 0, y: 0 })
@@ -13,6 +17,7 @@ export default function Hero({ reducedMotion }: HeroProps) {
 
   useEffect(() => {
     if (reducedMotion) return
+    if (window.matchMedia('(pointer: coarse)').matches) return
 
     function handleMouseMove(e: MouseEvent) {
       target.current.x = (e.clientX / window.innerWidth - 0.5) * 2
@@ -25,14 +30,9 @@ export default function Hero({ reducedMotion }: HeroProps) {
       smooth.current.y += (target.current.y - smooth.current.y) * LERP
 
       if (parallaxRef.current) {
-        const rotY = smooth.current.x * 8
-        const rotX = -smooth.current.y * 6
-
-        parallaxRef.current.style.transform = `
-          perspective(700px)
-          rotateX(${rotX}deg)
-          rotateY(${rotY}deg)
-        `
+        const rotY = smooth.current.x * 5
+        const rotX = -smooth.current.y * 4
+        parallaxRef.current.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg)`
       }
       raf.current = requestAnimationFrame(loop)
     }
@@ -46,25 +46,49 @@ export default function Hero({ reducedMotion }: HeroProps) {
     }
   }, [reducedMotion])
 
-  function scrollToProjects() {
-    document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
   return (
-    <section className="hero">
-      <div className="hero__parallax" ref={parallaxRef}>
-        <img src="/jardim-dev-logo-transparent.png" alt="Logo Jardim Dev" className="logo-hero" />
-
-        <div className="hero__text">
-          <h1 className="hero__name">Marcos Jardim</h1>
-          <p className="hero__tagline">Desenvolvedor &amp; criador de produtos digitais.</p>
+    <section className="hero" id="top">
+      <div className="hero__inner">
+        <div className="hero__logoWrap" ref={parallaxRef}>
+          <img src="/jardim-dev-logo-transparent.png" alt="Jardim Dev" className="hero__logo" />
         </div>
 
-        <button className="scroll-hint" onClick={scrollToProjects} aria-label="Ver projetos">
-          Ver projetos
-          <span className="scroll-arrow">↓</span>
-        </button>
+        <p className="hero__eyebrow">Marcos Jardim · Desenvolvedor full stack</p>
+
+        <h1 className="hero__title">
+          Produtos digitais, <span>do zero à produção.</span>
+        </h1>
+
+        <p className="hero__tagline">
+          Construo aplicações web completas — interface, backend, pagamentos e IA — e mantenho
+          cada uma rodando para usuários reais.
+        </p>
+
+        <div className="hero__actions">
+          <button className="btn btn--primary" onClick={() => scrollTo('#projetos')}>
+            Ver projetos <span className="btn__arrow">→</span>
+          </button>
+          <button className="btn btn--ghost" onClick={() => scrollTo('#contato')}>
+            Entrar em contato
+          </button>
+        </div>
+
+        <ul className="hero__facts">
+          <li>
+            <strong>3</strong> produtos em produção
+          </li>
+          <li>
+            <strong>Web · PWA · Android</strong>
+          </li>
+          <li>
+            <strong>React · Node.js · IA</strong>
+          </li>
+        </ul>
       </div>
+
+      <button className="hero__scroll" onClick={() => scrollTo('#projetos')} aria-label="Rolar até os projetos">
+        <span />
+      </button>
     </section>
   )
 }

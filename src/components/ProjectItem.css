@@ -1,247 +1,298 @@
 .project {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 64px;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 72px;
   align-items: center;
-  padding: 96px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.project:last-child {
-  border-bottom: none;
 }
 
 .project--reversed {
-  direction: rtl;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
 }
 
-.project--reversed > * {
-  direction: ltr;
+.project--reversed .project__visualWrap {
+  order: 2;
 }
 
 @media (max-width: 900px) {
   .project {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 32px;
-    padding: 56px 0;
+  }
+
+  .project--reversed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project--reversed .project__visualWrap {
+    order: 0;
   }
 }
 
-/* ── Visual (mockup abstrato) ────────────────────────────── */
+/* ── Prévia: janela de navegador com o print do projeto ──── */
 .project__visualWrap {
-  perspective: 1000px;
+  position: relative;
+}
+
+/* brilho verde discreto atrás da janela */
+.project__visualWrap::before {
+  content: '';
+  position: absolute;
+  inset: 8% 6% -4%;
+  background: radial-gradient(closest-side, rgba(0, 245, 176, 0.14), transparent);
+  filter: blur(40px);
+  opacity: 0.55;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.project:hover .project__visualWrap::before {
+  opacity: 1;
+}
+
+.project__visualLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--radius);
 }
 
 .project__visual {
   --px: 0px;
   --py: 0px;
   position: relative;
-  border-radius: 16px;
-  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-strong);
   background: var(--card);
   overflow: hidden;
-  aspect-ratio: 16 / 11;
-  transform: translate3d(0, 0, 0) scale(1);
-  transform-origin: center;
-  backface-visibility: hidden;
-  will-change: transform;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 30px 60px -30px rgba(0, 0, 0, 0.9);
+  transition:
+    transform 0.6s var(--ease-out),
+    border-color 0.3s ease;
 }
 
 .project:hover .project__visual {
-  /* zoom bem discreto — valores maiores em cima de formas sólidas
-     (sem linhas finas repetidas) evitam o serrilhado/pixelado */
-  transform: translate3d(0, -2px, 0) scale(1.012);
-  border-color: rgba(0, 245, 176, 0.25);
+  transform: translateY(-4px);
+  border-color: var(--primary-line);
 }
 
 .project__chrome {
   display: flex;
-  gap: 6px;
-  padding: 14px 16px;
+  align-items: center;
+  gap: 14px;
+  height: 40px;
+  padding: 0 14px;
+  background: #121414;
   border-bottom: 1px solid var(--border);
 }
 
-.project__chrome span {
-  width: 8px;
-  height: 8px;
+.project__dots {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.project__dots span {
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: var(--border);
+  background: #2a2d2d;
 }
 
-.project__mock {
-  position: absolute;
-  inset: 0;
-  top: 40px;
-  transform: translate3d(var(--px), var(--py), 0);
-  transition: transform 0.2s ease-out;
-  will-change: transform;
+.project__address {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex: 1;
+  max-width: 320px;
+  margin: 0 auto;
+  height: 24px;
+  padding: 0 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.project__mockImage {
-  position: absolute;
-  inset: 0;
-  top: 40px;
+.project__address svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* espaço à direita equivalente aos 3 pontos, pra barra ficar centralizada */
+.project__chrome::after {
+  content: '';
+  width: 39px;
+  flex-shrink: 0;
+}
+
+.project__screen {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #0b0c0c;
+}
+
+.project__shot {
+  display: block;
   width: 100%;
-  height: calc(100% - 40px);
+  height: 100%;
   object-fit: cover;
   object-position: top center;
-  transform: translate3d(var(--px), var(--py), 0) scale(1.03);
-  transition: transform 0.2s ease-out;
-  will-change: transform;
-}
-
-/* Todas as variantes usam formas sólidas com cantos arredondados —
-   nada de linhas finas repetidas ou box-shadow empilhado, que
-   "quebravam" (aliasing) ao escalar no hover. Diferenciação só por
-   composição/tamanho, cor sempre no verde da marca. */
-
-/* Redaciona AI — painel de score + linhas de texto */
-.project__visual--redaciona .project__mock {
-  background: linear-gradient(180deg, rgba(0, 245, 176, 0.06), transparent 60%);
-}
-
-.project__visual--redaciona .project__mock::before {
-  content: '';
-  position: absolute;
-  top: 26px;
-  right: 28px;
-  width: 30%;
-  height: 42%;
-  border-radius: 14px;
-  background: rgba(0, 245, 176, 0.10);
-  border: 1px solid rgba(0, 245, 176, 0.28);
-}
-
-.project__visual--redaciona .project__mock::after {
-  content: '';
-  position: absolute;
-  top: 26px;
-  left: 26px;
-  width: 42%;
-  height: 42%;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.045);
-}
-
-/* Tarefo — cartão de lista com um item em destaque */
-.project__visual--tarefo .project__mock {
-  background: linear-gradient(180deg, rgba(0, 245, 176, 0.05), transparent 60%);
-}
-
-.project__visual--tarefo .project__mock::before {
-  content: '';
-  position: absolute;
-  top: 24px;
-  left: 26px;
-  right: 26px;
-  height: 52px;
-  border-radius: 12px;
-  background: rgba(0, 245, 176, 0.10);
-  border: 1px solid rgba(0, 245, 176, 0.25);
-}
-
-.project__visual--tarefo .project__mock::after {
-  content: '';
-  position: absolute;
-  top: 92px;
-  left: 26px;
-  right: 26px;
-  height: 96px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-/* Bot de Promoções — bloco de mensagem enviada */
-.project__visual--bot .project__mock {
-  background: linear-gradient(180deg, rgba(0, 245, 176, 0.05), transparent 60%);
-}
-
-.project__visual--bot .project__mock::before {
-  content: '';
-  position: absolute;
-  top: 24px;
-  left: 26px;
-  width: 60%;
-  height: 40px;
-  border-radius: 12px 12px 12px 2px;
-  background: rgba(255, 255, 255, 0.045);
-}
-
-.project__visual--bot .project__mock::after {
-  content: '';
-  position: absolute;
-  top: 76px;
-  right: 26px;
-  width: 48%;
-  height: 40px;
-  border-radius: 12px 12px 2px 12px;
-  background: rgba(0, 245, 176, 0.12);
-  border: 1px solid rgba(0, 245, 176, 0.28);
+  transform: translate3d(var(--px), var(--py), 0) scale(1.025);
+  transition: transform 0.25s ease-out;
 }
 
 /* ── Conteúdo textual ────────────────────────────────────── */
-.project__content {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+.project__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border);
 }
 
-.project:hover .project__content {
-  transform: translateY(-3px);
+.project__index {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text);
+}
+
+.project__index i {
+  font-style: normal;
+  color: var(--text-dim);
+}
+
+.project__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  border: 1px solid rgba(0, 245, 176, 0.18);
+}
+
+.project__status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 245, 176, 0.18);
+}
+
+.project__category {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
 }
 
 .project__name {
-  font-size: clamp(24px, 3vw, 32px);
+  font-size: clamp(28px, 3.2vw, 38px);
   font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
   margin-bottom: 16px;
-  letter-spacing: -0.01em;
 }
 
 .project__description {
   color: var(--text-muted);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+.project__highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   margin-bottom: 28px;
-  max-width: 46ch;
+}
+
+.project__highlights li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.project__highlights li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.45em;
+  width: 9px;
+  height: 5px;
+  border-left: 1.5px solid var(--primary);
+  border-bottom: 1.5px solid var(--primary);
+  transform: rotate(-45deg);
 }
 
 .project__stack {
+  list-style: none;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-bottom: 32px;
 }
 
-.project__stackLabel {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-.project__stackList {
-  font-size: 14px;
+.project__stack li {
+  font-family: var(--font-mono);
+  font-size: 12px;
   color: var(--text-muted);
+  padding: 6px 11px;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .project__link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
   color: var(--text);
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 500;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease, color 0.2s ease, gap 0.2s ease;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.project__link span {
+  color: var(--primary);
+  transition: transform 0.25s var(--ease-out);
 }
 
 .project__link:hover {
-  color: var(--primary);
-  border-color: var(--primary);
-  gap: 10px;
+  border-color: var(--primary-line);
+  background: var(--primary-soft);
 }
 
-.project__link--disabled {
-  color: var(--text-dim);
-  cursor: default;
+.project__link:hover span {
+  transform: translate(2px, -2px);
 }

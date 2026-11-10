@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
 import Reveal from './Reveal'
+import SectionHead from './SectionHead'
 import './Process.css'
 
 const STEPS = [
@@ -10,46 +10,24 @@ const STEPS = [
 ]
 
 export default function Process() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [progress, setProgress] = useState(0)
-
-  useEffect(() => {
-    function handleScroll() {
-      const el = containerRef.current
-      if (!el) return
-      const rect = el.getBoundingClientRect()
-      const viewportH = window.innerHeight
-      const total = rect.height
-      const seen = Math.min(total, Math.max(0, viewportH * 0.75 - rect.top))
-      setProgress(Math.min(1, seen / total))
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   return (
     <section className="process section">
       <div className="section__inner">
-        <Reveal as="h2" className="process__title">
-          Como eu construo
-        </Reveal>
+        <SectionHead
+          label="Processo"
+          title="Como eu construo"
+          lead="O mesmo caminho em todo projeto: do problema ao produto no ar, e depois melhorando com uso real."
+        />
 
-        <div className="process__list" ref={containerRef}>
-          <div className="process__line">
-            <div className="process__lineFill" style={{ height: `${progress * 100}%` }} />
-          </div>
-
-          {STEPS.map((step) => (
-            <Reveal as="div" className="process__step" key={step.n}>
+        <ol className="process__grid">
+          {STEPS.map((step, i) => (
+            <Reveal as="li" className="process__step" key={step.n} delay={i * 80}>
               <span className="process__num">{step.n}</span>
-              <div>
-                <h3 className="process__stepTitle">{step.title}</h3>
-                <p className="process__stepDesc">{step.desc}</p>
-              </div>
+              <h3 className="process__stepTitle">{step.title}</h3>
+              <p className="process__stepDesc">{step.desc}</p>
             </Reveal>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   )
